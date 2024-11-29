@@ -1,0 +1,56 @@
+body{
+    background: url(https://images.unsplash.com/photo-1482784160316-6eb046863ece?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 400px;
+    height: 600px;
+}
+
+.login{
+   
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 350px;
+    text-align: center;
+    border: 1px solid rgb(241, 241, 241);
+    border-radius: 12px;
+    padding: 10px 20px;
+    background: transparent;
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
+    
+}
+
+
+.login h2 {
+    font-size: 30px;
+    color: #fffefe;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    z-index: 0;
+}
+
+.input-sak {
+    position: relative;
+}
+.input-sak input [type="email"], .input-sak input[type="password"] {
+border-radius: 10px; 
+background: transparent;
+margin: 15px;
+width: 200px;
+height: 2px;
+padding: 20px 40px 20px 20px;
+backdrop-filter: blur(15px);
+}
+
+.input-sak {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hidden {
+    display: none;
+}
