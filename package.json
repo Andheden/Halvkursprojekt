@@ -3,7 +3,8 @@
     "bcryptjs": "^2.4.3",
     "escape": "^0.0.1",
     "escape-html": "^1.0.3",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "express-session": "^1.18.1"
   },
   "name": "halvkurs",
   "version": "1.0.0",

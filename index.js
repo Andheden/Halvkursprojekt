@@ -3,9 +3,17 @@ const app = express();
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const escape = require("escape-html");
+const session = require("express-session");
 app.listen(1010);
 app.use(express.static("html"));
 app.use(express.urlencoded({ extended: true }))
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {}
+  }))
+
 
 app.get("/login", loginPage);
 app.get("/signup", signupPage);
@@ -13,6 +21,10 @@ app.get("/", homePage);
 
 app.post("/signup", signup);
 app.post("/login", login);
+
+app.get("/session", (req, res) => {
+    res.send(req.session);
+})
 
 
 function loginPage(req, res) {
@@ -64,6 +76,8 @@ async function login(req, res) {
         let checkpw = await bcrypt.compare(pw, usersExist.password);
         if (!checkpw) return res.send(render("Wrong password FN"));
 
+        req.session.auth = true;
+        req.session.email = email;
         res.send(render("Du är nu inloggad som " + escape(email)));
     } catch (error) {
         res.send(render(error.message));
@@ -75,8 +89,9 @@ async function login(req, res) {
 
 
 function homePage(req, res) {
-
-    res.send(render("homePage"))
+    if(req.session.auth == true)
+        return res.send(render("Hello " + req.session.email));
+    
 }
 
 
