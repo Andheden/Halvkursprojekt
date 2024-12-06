@@ -6,13 +6,14 @@ const escape = require("escape-html");
 const session = require("express-session");
 app.listen(1010);
 app.use(express.static("html"));
+app.use(express.static("public/html"));
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: true,
     cookie: {}
-  }))
+}))
 
 
 app.get("/login", loginPage);
@@ -40,14 +41,14 @@ async function signup(req, res) {
     try {
 
         let data = req.body;
-
+        data.id ="id_"+Date.now();
         if (data.password.length == 0)
             return res.send(render("try a real password yn fn"));
         let users = JSON.parse(fs.readFileSync("users.json").toString());
         let usersExist = users.find(u => u.email == data.email);
         if (usersExist) return res.send(render("user exits..."));
 
-        data.password = await bcrypt.hashSync(data.password, 5);
+        data.password = await bcrypt.hashSync(data.password, 12);
 
 
         users.push(data);
@@ -72,13 +73,15 @@ async function login(req, res) {
         let usersExist = users.find(u => u.email == email);
         if (!usersExist) return res.send(render("Create an account first FN"));
 
-        let hash = await bcrypt.hash(pw, 5);
+        let hash = await bcrypt.hash(pw, 12);
         let checkpw = await bcrypt.compare(pw, usersExist.password);
         if (!checkpw) return res.send(render("Wrong password FN"));
 
         req.session.auth = true;
-        req.session.email = email;
-        res.send(render("Du är nu inloggad som " + escape(email)));
+        req.session.username = usersExist.username;
+
+            res.redirect("/");
+      
     } catch (error) {
         res.send(render(error.message));
     }
@@ -88,10 +91,12 @@ async function login(req, res) {
 
 
 
+
+
 function homePage(req, res) {
-    if(req.session.auth == true)
-        return res.send(render("Hello " + req.session.email));
-    
+    if (req.session.auth == true)
+        return res.send(render("Hello " + req.session.username));
+
 }
 
 
