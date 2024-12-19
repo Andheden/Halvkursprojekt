@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    margin-left: 3%;
 }
 header {
     background: #333;
@@ -19,5 +20,16 @@ footer {
     background: #333;
     color: #fff;
     position: sticky;
-    
 }
+
+.bilder {
+    width: 25%;
+    border: 1px solid white;
+    box-sizing: border-box;
+    padding: 3%;
+}
+
+img {
+    width: 100%;
+}
+
